@@ -2,6 +2,12 @@ package code;
 
 public class Main {
     public static void main(String[] args) {
+        String initialState2 = "30;" +
+                "30,25,19;" +
+                "90,120,150;" +
+                "9,2;13,1;11,1;" +
+                "3195,11,12,10,34;" +
+                "691,7,8,6,15;";
         String init = "50;" +
                 "22,22,22;" +
                 "50,60,70;" +
@@ -43,6 +49,7 @@ public class Main {
          */
 
         String solution = LLAPSearch.solve(init, "BF", false);
+        System.out.println(solution);
 
     }
 }

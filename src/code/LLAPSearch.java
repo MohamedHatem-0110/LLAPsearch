@@ -3,10 +3,9 @@ package code;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-import code.Node;
 import java.util.regex.Matcher;
 
-public class LLAPSearch {
+public class LLAPSearch extends GenericSearch {
 
 	private static List<Integer> extractAllInts(String initStr) {
 		List<Integer> allInts = new ArrayList<>();
@@ -18,15 +17,75 @@ public class LLAPSearch {
 		return allInts;
 	}
 
+	public static void qingFunction(String strategy, ArrayList<Node> leaves) {
+		if (strategy.equals("BF")) {
+			queue.addAll(leaves);
+		} else if (strategy == "DF") {
+			queue.addAll(0, leaves);
+		} else if (strategy == "ID") {
+			queue.addAll(0, leaves);
+		} else if (strategy == "UC") {
+			if (queue.isEmpty()) {
+				queue.add(leaves.get(0));
+				leaves.remove(0);
+			}
+			for (int i = 0; i < leaves.size(); i++) {
+				for (int j = 0; j < queue.size(); j++) {
+					if (leaves.get(i).state.money_spent < queue.get(j).state.money_spent) {
+						queue.add(j, leaves.get(i));
+						break;
+					}
+				}
+			}
+		} else if (strategy == "GR1") {
+			queue.addAll(leaves);
+		} else if (strategy == "GR2") {
+			queue.addAll(leaves);
+		} else if (strategy == "AS1") {
+			queue.addAll(leaves);
+		} else if (strategy == "AS2") {
+			queue.addAll(leaves);
+		} else {
+			System.out.println("Invalid strategy");
+		}
+	}
+
 	public static String solve(String initialState, String strategy, boolean visualization) {
 		State s0 = initialization(initialState, strategy, visualization);
-		System.out.println(s0);
 		Node node = new Node(s0, null, null);
+		// queue = new ArrayList<Node>();
+		// queue.add(node);
+		// while (!queue.isEmpty()) {
+		// Node n = queue.remove(0);
+		// if (n.state.goal()) {
+		// return n.solution();
+		// }
+		// n.expand();
+		// qingFunction(strategy, n.leaves);
+		// }
+
+		// return "The output actions do not lead to a goal state.";
+
 		node.expand();
 		System.out.println(node.leaves);
-		Node node2 = new Node(node.leaves.get(2).state, node, node.leaves.get(2).operator);
+
+		Node node2 = node.leaves.get(0);
+		System.out.println(node2.state.foodDelay + "xxxx");
 		node2.expand();
+
 		System.out.println(node2.leaves);
+		Node node3 = node2.leaves.get(0);
+		node3.expand();
+
+		System.out.println(node3.leaves);
+		Node node4 = node3.leaves.get(0);
+		node4.expand();
+		System.out.println(node4.leaves);
+		System.out.println("Node 1 " + node);
+		System.out.println("Node 2 " + node2);
+		System.out.println("Node 3 " + node3);
+		System.out.println("Node 4 " + node4);
+		System.out.println(node4.solution());
 		return null;
 
 	}
